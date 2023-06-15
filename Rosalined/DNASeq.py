@@ -64,11 +64,12 @@ class DNASeq(object):
         self.__label = label
 
     def validateDNA(self, seq):
-        tempSeq = seq.upper()
-        if set(seq).issuperset(self.__nucleotide):
-            return tempSeq
-        return ""
-
+        tmpSeq = seq.upper()
+        for n in tmpSeq:
+            if n not in self.__nucleotide:
+                return ""
+            return tmpSeq
+        
     def getLabel(self):
         return self.__label
 

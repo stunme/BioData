@@ -2,6 +2,7 @@ class DNASeq(object):
     __sequence = ""
     __nucleotide = ['A', 'C', 'G', 'T']
     __DNACompliment = {'A':'T', 'C':'G', 'G':'C', 'T':'A'}
+    __label = ""
     __DNACodons = {
     # 'M' - START, '_' - STOP
     "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A",
@@ -53,19 +54,23 @@ class DNASeq(object):
     }
 
 
-    def __init__(self, seq):
+    def __init__(self, seq, label = ""):
         if isinstance(seq,int):
             import random
             self.__sequence = ''.join([random.choice(self.__nucleotide) for i in range(seq)])
         else:
             self.__sequence = self.validateDNA(seq)
             assert self.__sequence != "", f"The seqence is not validate DNA sequence"
+        self.__label = label
 
     def validateDNA(self, seq):
         tempSeq = seq.upper()
         if set(seq).issuperset(self.__nucleotide):
             return tempSeq
         return ""
+
+    def getLabel(self):
+        return self.__label
 
     def getSeq(self):
         """return whole sequence by 5'->3'"""

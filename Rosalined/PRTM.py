@@ -1,6 +1,5 @@
 ### Calculating Protein Mass
 
-
 massTable = {
     'A':71.03711,
     'C':103.00919,

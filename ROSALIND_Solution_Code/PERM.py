@@ -2,19 +2,12 @@
 
 n = 3
 
-def enumer(n):
-    res = [""]
-    for k in range(n):
-        tmp = []
-        for i in res:
-            for j in range(1,n+1):
-                if not str(j) in i:
-                    tmp.append(i+str(j))
-        res = tmp
+import itertools as it
+p = it.permutations(range(1,n+1))
 
-    return res
+for i in range(n):
+    i *= (i+1)
+print(i)
+for i in p:
+    print(" ".join(str(j) for j in i))
 
-tmp = enumer(n)
-print(len(tmp))
-for i in tmp:
-    print(" ".join(k for k in i))

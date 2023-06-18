@@ -8,4 +8,3 @@ with open("test.txt",'r') as f:
 
 for i in it.product(symbol,repeat=num):
     print(''.join(i))
-        

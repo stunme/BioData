@@ -10,4 +10,4 @@ for n in range(1,n+1):
     if total>mod:
         total %= mod
 
-print total
+print(total)

@@ -55,3 +55,30 @@ def catalan1(s, mod= 1000000):
 start = time.time()
 print(catalan1(s))
 print(time.time()-start)
+
+
+## =================================================================================================
+## shorten my solution according to Rosaland solution. about 1.5 times slower.
+
+dicAll={}
+dicMatch = {'A':'U',
+            'U':'A',
+            'G':'C',
+            'C':'G'
+            }
+def catalan2(start, end, mod = 1000000):
+    tmp = (start,end)
+    if tmp not in dicAll:
+        s = seq[start:end]
+        if s.count('A')!=s.count('U') or s.count('G')!=s.count('C'):
+            dicAll[tmp] = 0
+        elif end <= start + 2:
+            dicAll[tmp] = 1
+        else:
+            dicAll[tmp] = sum([catalan2(start+1,i)*catalan2(i+1,end)%mod for i in range(start+1,end,2) if dicMatch[seq[start]] == seq[i]])%mod
+    return dicAll[tmp]
+
+
+start = time.time()
+print(catalan2(0,len(seq)))
+print(time.time()-start)

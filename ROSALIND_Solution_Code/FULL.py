@@ -1,4 +1,4 @@
-##  Inferring Protein from Spectrum 
+##  Inferring Peptide from Full Spectrum
 
 HOH = 18.01056 
 dic = {

@@ -1,0 +1,4 @@
+need to be went over again!
+
+patiency sorting
+KMP

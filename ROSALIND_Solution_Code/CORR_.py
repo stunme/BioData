@@ -61,11 +61,11 @@ def hamming(s,t):
 def include_revcomp(reads):
     return reads[:] + [ revcomp(read) for read in reads]
 
-# reads = readFastaFileList("test.txt")
-# reads_and_revcomp = include_revcomp(reads)
-# correct_reads = set( include_revcomp( [ read for read in reads if reads_and_revcomp.count(read) > 1 ] ) )
+reads = readFastaFileList("test.txt")
+reads_and_revcomp = include_revcomp(reads)
+correct_reads = set( include_revcomp( [ read for read in reads if reads_and_revcomp.count(read) > 1 ] ) )
 
-# res=""
-# for read in (set(reads) - correct_reads):
-#     with open("result.txt","w") as f:
-#         f.write(f"{read}->{[ r2 for r2 in correct_reads if hamming(r2,read) == 1 ][0]}")
+res=""
+for read in (set(reads) - correct_reads):
+    with open("result.txt","w") as f:
+        f.write(f"{read}->{[ r2 for r2 in correct_reads if hamming(r2,read) == 1 ][0]}")

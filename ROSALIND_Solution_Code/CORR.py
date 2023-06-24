@@ -6,7 +6,7 @@ def corr(seqList):
     n = len(seqList)
     rcList = [s.translate(str.maketrans("ATGC","TACG"))[::-1] for s in seqList]
     idxSet = set([i for i in range(n)])
-    matchSet = []
+    matchList = []
     
     ## obtain idxSet, which only contain unmatched seq
     i = 0
@@ -17,7 +17,7 @@ def corr(seqList):
                     if seqList[i] == seqList[j] or seqList[i] == rcList[j]:
                         if i in idxSet:
                             idxSet.remove(i)
-                            matchSet.append(i)
+                            matchList.append(i)
                         idxSet.remove(j)  
         i += 1
 
@@ -39,7 +39,7 @@ def corr(seqList):
         return ""
 
     for m in idxSet:
-        for n in matchSet:
+        for n in matchList:
             tmp = newSeq(m,n)
             if tmp!="":
                 with open("result.txt",'a') as f:

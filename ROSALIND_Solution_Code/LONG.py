@@ -66,10 +66,10 @@ def long2(seqList):
                 if seqList[i][x-1] == seqList[j][y]:
                     y += 1
                 align[x] = y
-            if j ==12 and i ==1:
-                print(" ".join([str(m) for m in align]))
-                print(" ".join([m for m in seqList[i]]))
-                print(" ".join([m for m in seqList[j]]))
+            # if j ==12 and i ==1:
+            #     print(" ".join([str(m) for m in align]))
+            #     print(" ".join([m for m in seqList[i]]))
+            #     print(" ".join([m for m in seqList[j]]))
                 # print(i,j, align)
             if align[-1]>l:
                 dic[(i,j)] = -align[-1]
@@ -83,7 +83,7 @@ def long2(seqList):
     # for i in pathTree:
     #     print(i, pathTree[i])
     
-    print(leftSet)
+    # print(leftSet)
     for i in range(n):
         if i not in leftSet:
             break

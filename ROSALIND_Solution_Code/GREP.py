@@ -8,6 +8,7 @@ def addSeq(seq, newList,n):
         tmp = i[:-1]
         if tmp == cur:
             nextSet.add(i)
+
     ## if find next subseq add it to seq
     if len(nextSet) > 0:
         for i in nextSet:

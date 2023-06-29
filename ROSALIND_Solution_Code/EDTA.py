@@ -42,8 +42,8 @@ def edta(seqI,seqJ):
             j -= 1
 
     print(arr[lenI-1][lenJ-1])
-    print(sI)
-    print(sJ)
+    print("-"*i+sI)
+    print("-"*j+sJ)
     return arr
 
 seq = readFastaFileList("test.txt")

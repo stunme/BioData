@@ -1,10 +1,11 @@
 ##  Global Alignment with Scoring Matrix
 
+from utility import readFastaFileList
 
+## construct BLOSUM62 scoring dict
 with open("BLOSUM62.txt","r") as f:
     aa = f.readline().strip().split()
     m = [l.strip().split() for l in f.readlines()]
-
 BLOSUM62 = {}
 for i in range(len(aa)):
    for j in range(1,len(aa)+1):
@@ -31,6 +32,5 @@ def glob(seq1, seq2, scoreMatrix):
             
    return arr[i][j]
 
-seq1 = "PLEASANTLY"
-seq2 = "MEANLY"
-print(glob(seq1, seq2, BLOSUM62))
+seq = readFastaFileList("test.txt")
+print(glob(seq[0], seq[1] BLOSUM62))

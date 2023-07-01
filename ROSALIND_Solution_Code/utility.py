@@ -23,6 +23,8 @@ def readFastaFileList(path):
     with open(path, 'r') as f:
         for l in f.readlines():
             tmpLine = l.strip()
+            if tmpLine == "":
+                continue
             if tmpLine[0] == '>':
                 if not tmp == "":
                     res.append(tmp)

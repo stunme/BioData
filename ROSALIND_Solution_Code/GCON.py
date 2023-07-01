@@ -15,32 +15,52 @@ def gcon(seq1, seq2, scoreMatrix):
    gap= -5
    lenI, lenJ = len(seq1)+1, len(seq2)+1
    arr = []
+   arrI = []
+   arrJ = []
    for i in range(lenI):
       arr.append([0]*lenJ)
+      arrI.append([0]*lenJ)
+      arrJ.append([0]*lenJ)
    for j in range(1, lenJ):
       arr[0][j] = gap
+      arrI[0][j] = gap
+      arrJ[0][j] = gap
    for i in range(1, lenI):
       arr[i][0] = gap
-   igap = 1
-   jgap = 1
+      arrI[i][0] = gap
+      arrJ[i][0] = gap
+      
    for i in range(1,lenI):
       for j in range(1, lenJ):
-         arr[i][j] = max(
-                           arr[i][j-1]+gap*jgap,
-                           arr[i-1][j]+gap*igap,
-                           arr[i-1][j-1]+scoreMatrix[seq1[i-1]+seq2[j-1]]
-               )
-         if arr[i][j] == arr[i][j-1]+gap*jgap:
-            jgap = 1
-            igap = 0
-         elif arr[i][j] == arr[i-1][j]+gap*igap:
-            jgap = 0
-            igap = 1
-         else:
-            jgap = 1
-            igap = 1
-            
-   return arr[i][j]
+         arr[i][j] = max(arr[i-1][j-1]+scoreMatrix[seq1[i-1]+seq2[j-1]],
+                         arrJ[i][j-1]+gap,
+                         arrI[i-1][j]+gap
+                         )
+         arrJ[i][j] = max(arrJ[i][j-1],arr[i][j] )
+         arrI[i][j] = max(arrI[i-1][j],arr[i][j] )
+         
+   # trace back
+   seqI = ""
+   seqJ = ""
+   while i*j != 0:
+      if arr[i][j]-BLOSUM62[seq1[i-1]+seq2[j-1]] == arr[i-1][j-1]:
+         i -= 1
+         j -= 1
+         seqI = seq1[i]+seqI
+         seqJ = seq2[j]+seqJ
+      elif arrJ[i][j] == arrJ[i][j-1]:
+         j -= 1
+         seqI = '-'+seqI
+         seqJ = seq2[j]+seqJ
+      elif arrI[i][j] == arrI[i-1][j]:
+         i -= 1
+         seqI = seq1[i]+seqI
+         seqJ = '-'+seqJ
+   
+   print("-"*j+seqI)
+   print("-"*i+seqJ)
+
+   return arr[lenI-1][lenJ-1]
 
 seq = readFastaFileList("test.txt")
-print(gcon(seq[0], seq[1] BLOSUM62))
+print(gcon(seq[0], seq[1], BLOSUM62))

@@ -4,3 +4,4 @@ patiency sorting
 KMP
 Counter 
 LCSQ.py, EDIT.py
+suffix tree solution for LING

@@ -15,18 +15,23 @@ def laff(seq1, seq2, scoreMatrix, a,b):
         tracker.append([0]*lenJ)
     
     max_x, max_y = 0, 0
-    for i in range(1, lenI):
+    # instead of full map of arrI and arrJ used in GAFF. here only use tmp array to save memory and time
+    arrI = [0]*lenJ
+    arrII = [0]*lenJ
+    arrJ = [0]*lenJ
+
+    for i in range(1, lenI):        
         for j in range(1, lenJ):
             tmp = [ arr[i-1][j-1] + scoreMatrix[seq1[i-1]+seq2[j-1]],
-                    arrI[i-1][j]-a,
-                    arrJ[i][j-1]-a,
+                    arrI[j]-a,
+                    arrJ[j-1]-a,
                     0]
             max_tmp = max(tmp)
             arr[i][j] = max_tmp
-            arrI[i][j] = max(arrI[i-1][j]-b,max_tmp)
-            arrJ[i][j] = max(arrJ[i][j-1]-b,max_tmp)
+            arrII[j] = max(arrI[j]-b,max_tmp)
+            arrI[j] = arrII[j]
+            arrJ[j] = max(arrJ[j-1]-b,max_tmp)
             tracker[i][j] = tmp.index(max_tmp)
-            
             if arr[i][j]>arr[max_x][max_y]:
                 max_x, max_y = i,j
 

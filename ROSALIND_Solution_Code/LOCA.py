@@ -5,35 +5,35 @@ from utility import readFastaFileList
 def loca(seq1, seq2, scoreMatrixm, gap):
     lenI, lenJ = len(seq1)+1, len(seq2)+1
     arr = []
+    tracker = []
     for i in range(lenI):
         arr.append([0]*lenJ)
+        tracker.append([0]*lenJ)
+
+    max_x, max_y = 0,0
     for i in range(1, lenI):
         for j in range(1, lenJ):
-            arr[i][j] = max(arr[i-1][j-1] + scoreMatrixm[seq1[i-1]+seq2[j-1]],
-                            arr[i-1][j] + gap,
-                            arr[i][j-1] + gap,
-                            0
-                            )
+            tmp = [ arr[i-1][j-1] + scoreMatrixm[seq1[i-1]+seq2[j-1]],
+                    arr[i-1][j] + gap,
+                    arr[i][j-1] + gap,
+                    0]
+            arr[i][j] = max(tmp)
+            tracker[i][j] = tmp.index(arr[i][j])
+            if arr[max_x][max_y]<arr[i][j]:
+                max_x, max_y = i,j
 
-    #trace back
-    end = (i,j)
-    for x in range(lenI):
-        for y in range(lenJ):
-            if arr[end[0]][end[1]]<arr[x][y]:
-                end = (x,y)
-               
-    i, j = end[0],end[1]
-    while i * j != 0:
-        tmp = max(arr[i-1][j-1],arr[i-1][j],arr[i][j-1])
-        if arr[i-1][j] == tmp:
-            i -= 1
-        elif arr[i][j-1] == tmp:
-            j -= 1
-        else:
-            i -= 1
-            j -= 1
-
-    return arr[end[0]][end[1]], seq1[:end[0]],seq2[:end[1]]
+    i, j = max_x, max_y 
+    while tracker[i][j] != 3 and i * j != 0:
+        match tracker[i][j]:
+            case 2:
+                j -= 1
+            case 1:
+                i -= 1
+            case 0:
+                i -= 1
+                j -= 1  
+                
+    return arr[max_x][max_y], seq1[i:max_x],seq2[j:max_y]
     
 
 ## construct BLOSUM62 scoring dict
@@ -48,6 +48,8 @@ for i in range(len(aa)):
 gap = -5
 
 seq = readFastaFileList("test.txt")
+
+
 
 result = loca(seq[0],seq[1],scoreMatrixm,gap)
 print("\n".join(str(i) for i in result))

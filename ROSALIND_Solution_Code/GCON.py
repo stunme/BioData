@@ -2,14 +2,6 @@
 
 from utility import readFastaFileList
 
-## construct BLOSUM62 scoring dict
-with open("BLOSUM62.txt","r") as f:
-    aa = f.readline().strip().split()
-    m = [l.strip().split() for l in f.readlines()]
-BLOSUM62 = {}
-for i in range(len(aa)):
-   for j in range(1,len(aa)+1):
-      BLOSUM62[aa[i]+aa[j-1]] = int(m[i][j])
   
 def gcon(seq1, seq2, scoreMatrix):
    gap= -5
@@ -39,28 +31,16 @@ def gcon(seq1, seq2, scoreMatrix):
          arrJ[i][j] = max(arrJ[i][j-1],arr[i][j] )
          arrI[i][j] = max(arrI[i-1][j],arr[i][j] )
          
-   # trace back
-   seqI = ""
-   seqJ = ""
-   while i*j != 0:
-      if arr[i][j]-BLOSUM62[seq1[i-1]+seq2[j-1]] == arr[i-1][j-1]:
-         i -= 1
-         j -= 1
-         seqI = seq1[i]+seqI
-         seqJ = seq2[j]+seqJ
-      elif arrJ[i][j] == arrJ[i][j-1]:
-         j -= 1
-         seqI = '-'+seqI
-         seqJ = seq2[j]+seqJ
-      elif arrI[i][j] == arrI[i-1][j]:
-         i -= 1
-         seqI = seq1[i]+seqI
-         seqJ = '-'+seqJ
-   
-   print("-"*j+seqI)
-   print("-"*i+seqJ)
-
    return arr[lenI-1][lenJ-1]
 
+## construct BLOSUM62 scoring dict
+with open("BLOSUM62.txt","r") as f:
+    aa = f.readline().strip().split()
+    m = [l.strip().split() for l in f.readlines()]
+scoreMatrix = {}
+for i in range(len(aa)):
+   for j in range(1,len(aa)+1):
+      scoreMatrix[aa[i]+aa[j-1]] = int(m[i][j])
+
 seq = readFastaFileList("test.txt")
-print(gcon(seq[0], seq[1], BLOSUM62))
+print(gcon(seq[0], seq[1], scoreMatrix))

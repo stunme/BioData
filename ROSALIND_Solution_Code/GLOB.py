@@ -33,4 +33,4 @@ def glob(seq1, seq2, scoreMatrix):
    return arr[i][j]
 
 seq = readFastaFileList("test.txt")
-print(glob(seq[0], seq[1] BLOSUM62))
+print(glob(seq[0], seq[1],BLOSUM62))

@@ -1,89 +1,68 @@
 ##  Encoding Suffix Trees
+import time
 
 with open("test.txt","r") as f:
     seq = f.readline().strip()
 
-
+start = time.time()
 
 class node(object):
-    num = 0
-    pos = 0
-    parent = None
-    child = []   #{ collection of children }
-    def __init__(self, parent, pos, num) -> None:
-        self.num = num
-        self.pos = pos
-        self.parent = parent
+    def __init__(self) -> None:
+        self.child = {}
+        self.seq = ""
+
+root = node()
+nodes = []
+
+for i in range(len(seq)):
+    cur = root
+    idx = 0
+    for j in range(i,len(seq)):
+        if idx == len(cur.seq):
+            if seq[j] in cur.child:
+                cur = cur.child[seq[j]]
+                idx = 1
+            else:
+                cur.child[seq[j]] = node()
+                cur.child[seq[j]].seq = seq[j:]
+                nodes.append(cur.child[seq[j]])
+                break
+        else:
+            if seq[j] == cur.seq[idx]:
+                idx += 1
+                continue
+            else:
+                tmp = cur.child
+                tmpSeq = cur.seq
+                cur.seq = tmpSeq[:idx]
+                cur.child = {}
+                cur.child[seq[j]] = node()
+                cur.child[seq[j]].seq = seq[j:]
+                nodes.append(cur.child[seq[j]])
+                cur.child[tmpSeq[idx]] = node()
+                cur.child[tmpSeq[idx]].seq = tmpSeq[idx:]
+                cur.child[tmpSeq[idx]].child = tmp
+                nodes.append(cur.child[tmpSeq[idx]])
+                break
+
+
+with open("result.txt","a") as f:
+    setA = []
+    for n in nodes:
+        f.write(f"{n.seq}\n")
+        setA.append(n.seq)
+    f.write("=============\n")
+
+print(time.time()-start)        
+
     
-    def addChild(self,child):
-        self.child.append(child)
-    
-    def delChild(self,child):
-        self.child.remove(child)
-
-    def upEdge(self):
-        return (self.parent.num,self.num)
-
-
-class suffTree(object):
-    sequence = ""
-    root = None
-    nodes = set()  # { node as child }
-    edge = {}   #{(parent(int),child(int)) : (start(int), end(int))}
-
-    def __init__(self,seq) -> None:
-        self.sequence == seq
-        self.root = node()
-        self.tree(seq)
-
-    def tree(self, seq):
-        endNodes = {}   # {Node}
-        cur = None    # [child(Node)]
-        pos = 0       # position in current edge  
-        num = 2
-        for i in range(len(seq)):
-            nt = seq[i]
-            tmp = [self.root]
-            if not cur:
-                if pos == cur.pos-cur.parent.pos:
-                    tmp.insert(0,cur)
-                else:
-                    if seq[cur.parent.pos+pos] == nt:
-                        pos +=1
-                    else:
-                        newNode = node(cur.parent,cur.parent.pos+pos,num)
-                        num +=1
-                        cur.parent.delChild(cur)
-                        cur.parent.addChild(newNode)
-                        self.nodes.add(newNode)
-                        newNode.addChild(cur)
-                        cur.changeParent(newNode)
-                        tmp.insert(0,newNode)
-            for x in tmp:
-                for y in x.child:
-                    if seq[y.parent.pos+1] == nt:
-                        cur = y
-                        pos = 1
-                        break
-                ## add new 
-            
-            
-
-
-
-
-
-
-
-
-
 
 
 
 
 
 ## O(n^2)
-
+start = time.time()
 root = {}
 
 ## build up the tree
@@ -114,5 +93,11 @@ def traceBack(node, seq, parent):
 traceBack(root,"",1)
 
 with open("result.txt","a") as f:
+    setB = []
     for n,e in edge.items():
         f.write(f"{e}\n")
+        setB.append(e)
+
+print(time.time()-start)
+
+

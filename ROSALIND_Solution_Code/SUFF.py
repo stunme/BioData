@@ -53,7 +53,7 @@ with open("test.txt","r") as f:
 
 nodes = suff(seq)
 
-with open("result.txt","a") as f:
+with open("result.txt","w") as f:
     for n in nodes:
         if n.seq == "":
             continue
@@ -97,7 +97,7 @@ def traceBack(node, seq, parent):
 ## start recursion
 traceBack(root,"",1)
 
-with open("result.txt","a") as f:
+with open("result.txt","w") as f:
     setB = []
     for n,e in edge.items():
         f.write(f"{e}\n")

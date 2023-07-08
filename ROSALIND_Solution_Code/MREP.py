@@ -74,8 +74,10 @@ def mrep(root,seq,n):
         for key,c in node.child.items():
             if len(selfSeq) >= n:
                 if selfSeq in seqDict:
-                    seqDict[selfSeq].add(seq(c.seq[0]-len(selfSeq)-1))    
+                    seqDict[selfSeq].add(seq[c.seq[0]-len(selfSeq)-1])    
                 # result.append((c.seq[0]-len(selfSeq), c.seq[0]))
+                else:
+                     seqDict[selfSeq] = {seq[c.seq[0]-len(selfSeq)-1]}
             traceDown(c,selfSeq)
     
     traceDown(root,"")
@@ -97,4 +99,4 @@ nodes = suff(seq)
 mrep(nodes[0],seq, n)
 for key, value in mrep(nodes[0],seq, n).items():
     if len(value) > 1:
-        print(x)
+        print(key)

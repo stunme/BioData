@@ -1,5 +1,7 @@
 ##  Identifying Maximal Repeats
-
+#   This solution seems not working on some data with overlap repeat sequence, e.g. GAATCGAATCGA
+#   Is GAATCGA a max-repeats? 
+#   The two repeats overlapped with GA, one end with GA and another use the same GA as start
 
 ## generate max-repeats from suffix tree, not during build the tree up
 #  
@@ -48,23 +50,6 @@ def suff(seq):
 
 
 
-# def mrep(root,seq,n):
-#     result = {}
-#     def traceDown(node,upSeq):
-#         endPos = node.seq[0]+node.seq[1]
-#         # print(upSeq+seq[node.seq[0]:endPos])
-#         if len(node.child)>0 and len(upSeq)+node.seq[1] >= n:
-#             if (endPos in result) and result[endPos] < node.seq[0]-len(upSeq):
-#                 return     
-#             result[endPos] = node.seq[0]-len(upSeq)
-#         selfSeq = upSeq+seq[node.seq[0]:endPos]
-#         for c in node.child:
-#            traceDown(node.child[c],selfSeq)
-    
-#     traceDown(root,"")
-#     return result
-
-
 def mrep(root,seq,n):
     result = []
     seqDict = {}
@@ -75,7 +60,6 @@ def mrep(root,seq,n):
             if len(selfSeq) >= n:
                 if selfSeq in seqDict:
                     seqDict[selfSeq].add(seq[c.seq[0]-len(selfSeq)-1])    
-                # result.append((c.seq[0]-len(selfSeq), c.seq[0]))
                 else:
                      seqDict[selfSeq] = {seq[c.seq[0]-len(selfSeq)-1]}
             traceDown(c,selfSeq)
@@ -83,9 +67,6 @@ def mrep(root,seq,n):
     traceDown(root,"")
 
     return seqDict
-
-
-
 
 with open("test.txt",'r') as f:
     seq = f.readline().strip()
@@ -96,7 +77,7 @@ if seq[-1] != '$':
 n = 20
 nodes = suff(seq)
 
-mrep(nodes[0],seq, n)
 for key, value in mrep(nodes[0],seq, n).items():
     if len(value) > 1:
         print(key)
+

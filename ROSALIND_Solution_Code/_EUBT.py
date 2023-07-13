@@ -4,7 +4,6 @@ import itertools as it
 
 allTrees = []
 
-
 def eubt(taxaList):
     if len(taxaList)<3:
         return taxaList
@@ -14,10 +13,6 @@ def eubt(taxaList):
             subSetB = {x for x in taxaList if x not in subSetA}
             
             
-
-
-
-
 
 with open("test.txt",'r') as f:
     taxaList = f.readline().strip().split()

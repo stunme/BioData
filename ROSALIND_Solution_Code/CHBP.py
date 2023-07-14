@@ -79,3 +79,27 @@ with open("test.txt",'r') as f:
 
 print(f"{chbp(taxaList, charTableList)};")
 
+
+
+# verify the result by excute CTBL.py to generate a charTabale, compare to original charTable by code below
+
+# with open("charTable_original.txt",'r') as f:
+#     f.readline()
+#     oriCT = [i.strip() for i in f.readlines()]
+
+# with open("charTable_new.txt",'r') as f:
+#     newCT = [i.strip() for i in f.readlines()]
+
+# mapping = str.maketrans('01', '10')
+
+# same = 0
+# diff = 0
+
+# for i in oriCT:
+#     if i in newCT or i.translate(mapping) in newCT:
+#         same +=1
+#     else:
+#         diff +=1
+
+# print(same, diff)
+

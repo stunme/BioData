@@ -1,6 +1,14 @@
 ##  Counting Quartets
 
- 
+# another pure math question. Pick any four taxas from the collection will guarantee to have one quartet.
+
+with open("test.txt",'r') as f:
+    n = int(f.readline().strip())
+print(fa(n)/fa(n-4)/fa(4)%10**6)
+
+
+
+# Another solution by recursion calculate every branch. 
 
 
 from math import factorial as fa

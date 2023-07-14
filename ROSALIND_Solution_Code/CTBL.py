@@ -32,6 +32,7 @@ with open("test.txt",'r') as f:
 
 ctbl_ = ctbl(treeStr)
 
+
 with open("result.txt",'w') as f:
     for i in range(1,len(ctbl_[0])):
         f.write("".join((j[i]) for j in ctbl_))

@@ -41,9 +41,8 @@ ctbl2 = ctbl(taxaTree2)
 set1 = set()
 set2 = set()
 
-with open("result.txt",'w') as f:
-    for i in range(1,len(ctbl1[0])):
-        set1.add("".join((j[i]) for j in ctbl1))
-        set2.add("".join((j[i]) for j in ctbl2))
+for i in range(1,len(ctbl1[0])):
+    set1.add("".join((j[i]) for j in ctbl1))
+    set2.add("".join((j[i]) for j in ctbl2))
 
 print(2*(len(taxas)-3)-2*len(set1&set2))

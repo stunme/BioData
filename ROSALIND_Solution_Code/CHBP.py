@@ -1,5 +1,7 @@
 ##  Character-Based Phylogeny 
 
+# Straight forward implement, may further optimized to save time/space expense.
+
 def chbp(taxaList, charTableList):
     class edge():
         def __init__(self) -> None:

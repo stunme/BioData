@@ -96,5 +96,5 @@ import functools
 start = time.time()
 print(len(getNewick(root)),functools.reduce(lambda a, b: a*b % 10**6, range(2*len(taxaList)-5, 1, -2))) 
 print(time.time()-start)
-for i in getNewick(root):
-    print(f"{i};")
+# for i in getNewick(root):
+#     print(f"{i};")

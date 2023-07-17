@@ -5,6 +5,8 @@ from utility import readFastaFileList
 
 def mult(seqList):    
     def traceDown(i,j):
+        """Trace back to generate all possible alignments. 
+           Will need global var traceDic, m and copySL"""
         if (i,j) not in traceDic:
             traceDic[(i,j)] = []
             if i*j == 0:
@@ -58,7 +60,7 @@ def mult(seqList):
             for i in range(1,lenI):
                 for j in range(1,lenJ):
                     a = arr[i-1][j-1]-len([x for x in range(m) if copySL[x][i-1]!=copySL[m][j-1]])
-                    b = arr[i-1][j]-len([x for x in range(m) if copySL[x][i-1]!='-'])
+                    b = arr[i-1][j]+arr[i][0]-arr[i-1][0]
                     c = arr[i][j-1]-m
                     arr[i][j] = max(a,b,c)
                     tracker[i][j] = []
@@ -69,6 +71,7 @@ def mult(seqList):
                     if arr[i][j] == c:
                         tracker[i][j].append(2)
             
+            ## Track back to get all possible aligment only when current score is the max scores ever
             if arr[i][j]<maxScore:
                 continue
             elif arr[i][j] > maxScore:

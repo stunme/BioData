@@ -3,7 +3,7 @@ need to be went over again!
 PDPL.py
 patiency sorting, LGIS.py
 KMP
-Counter 
+Counter, all
 LCSQ.py, EDIT.py
 suffix tree solution for LING
 MEND.py

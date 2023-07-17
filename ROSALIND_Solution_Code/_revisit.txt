@@ -1,6 +1,6 @@
 need to be went over again!
 
-patiency sorting
+patiency sorting, LGIS.py
 KMP
 Counter 
 LCSQ.py, EDIT.py

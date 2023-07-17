@@ -38,6 +38,7 @@ def mult(seqList):
                             traceDic[(i,j)].append(y)    
         return traceDic[(i,j)]
     
+    totalScore = 0
     stack = [seqList.copy()]
     for m in range(1,len(seqList)):
         maxScore = -1000000
@@ -45,21 +46,20 @@ def mult(seqList):
         for copySL in stack:
             lenI = len(copySL[m-1])+1
             lenJ = len(copySL[m])+1
-
             arr = []
             tracker = []
             for i in range(lenI): 
                 arr.append([0]*lenJ)
                 tracker.append([0]*lenJ)
             for i in range(1,lenI):
-                arr[i][0] = -1*i
+                arr[i][0] = arr[i-1][0]-len([x for x in range(m) if copySL[x][i-1]!='-'])
             for j in range(1,lenJ):
-                arr[0][j] = -1*j
+                arr[0][j] = -m*j
             for i in range(1,lenI):
                 for j in range(1,lenJ):
                     a = arr[i-1][j-1]-len([x for x in range(m) if copySL[x][i-1]!=copySL[m][j-1]])
                     b = arr[i-1][j]-len([x for x in range(m) if copySL[x][i-1]!='-'])
-                    c = arr[i][j-1]-len([x for x in range(m)])
+                    c = arr[i][j-1]-m
                     arr[i][j] = max(a,b,c)
                     tracker[i][j] = []
                     if arr[i][j] == a:
@@ -77,28 +77,13 @@ def mult(seqList):
             traceDic = {}
             for x in traceDown(i,j):
                 tmpStack.append(x)
-
         stack = tmpStack.copy()
-    return stack
+        totalScore += maxScore
+    print(totalScore)
+    return stack[0]
 
 seqList = readFastaFileList("test.txt")
 sl = mult(seqList)
+print("\n".join(i for i in sl))
 
-import itertools as it
-maxNum = -1000000
-maxAlign = None
-
-for ss in sl:
-    count = 0
-    for a,b in it.combinations(ss,2):
-        for x,y in zip(a,b):
-            if x!=y:
-                count -= 1
-    if count>maxNum:
-        maxNum = count
-        maxAlign = ss
-    
-print(maxNum)
-for i in maxAlign:
-    print(i)
 

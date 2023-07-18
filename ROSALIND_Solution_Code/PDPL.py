@@ -5,18 +5,21 @@ def pdpl(cutDict):
     allPos = {0}
     endPos = max(cutDict)
 
-    pairwise = lambda cut, Set: Counter(abs(cut-i) for i in Set)
-    isSubDict = lambda a, b: all(a[i] <= b[i] for i in a)
+    def counterCut(cut,posSet):
+        return Counter(abs(cut-i) for i in posSet)
+    
+    def isSubDict(dicA, dicB):
+        return all(dicA[i] <= dicB[i] for i in dicA)
 
     while len(cutDict) > 0:
         curPos = max(cutDict)
         ## check if all pairwises of a cut are all in the cutDict, if so, remove all cuts.
-        if isSubDict(pairwise(curPos, allPos), cutDict):
+        if isSubDict(counterCut(curPos, allPos), cutDict):
             allPos |= {curPos}
-            cutDict -= pairwise(curPos, allPos)
+            cutDict -= counterCut(curPos, allPos)
         else:
             allPos |= {endPos - curPos}
-            cutDict -= pairwise(endPos - curPos, allPos)
+            cutDict -= counterCut(endPos - curPos, allPos)
     
     return list(allPos)
 

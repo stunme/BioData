@@ -37,6 +37,7 @@ def ksim(seqI, seqJ, k):
                     tracker[i][j] = 2
                 cur[j] +=1
         if cur[j]<k:
+            print(j,cur[j])
             aligns.append(i)
     print(time.time()-start)
     start = time.time()

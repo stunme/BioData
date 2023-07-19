@@ -13,9 +13,10 @@ def edit(seqI,seqJ):
     for i in range(1,lenI):
         for j in range(1, lenJ):
             if seqI[i-1] == seqJ[j-1]:
+                # arr[i][j] = min(arr[i-1][j-1],arr[i][j-1]+1,arr[i-1][j]+1)
                 arr[i][j] = arr[i-1][j-1]
             else:
-                arr[i][j] = min(arr[i-1][j-1]+1,arr[i][j-1]+1,arr[i-1][j]+1)
+                arr[i][j] = min(arr[i-1][j-1],arr[i][j-1],arr[i-1][j])+1
 
 
     return arr[lenI-1][lenJ-1]

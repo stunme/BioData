@@ -29,7 +29,6 @@ def ksim(seqI, seqJ, k):
                 elif cur[j] == cur[j-1]:
                     tracker[i][j] = 2
                 cur[j] +=1
-        print("\t".join(str(m) for m in cur))
         if cur[j]<k:
             aligns.append((i,cur[j]))
     result = []

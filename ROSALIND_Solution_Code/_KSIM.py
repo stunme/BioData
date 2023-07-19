@@ -29,9 +29,7 @@ def ksim(seqI, seqJ, k):
                                  cur[j-1])
                 if cur[j] == k:
                     continue
-                if cur[j] == pre[j-1]:
-                    tracker[i][j] = 0
-                elif cur[j] == pre[j]:
+                if cur[j] == pre[j]:
                     tracker[i][j] = 1
                 elif cur[j] == cur[j-1]:
                     tracker[i][j] = 2

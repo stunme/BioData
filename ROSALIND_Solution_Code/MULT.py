@@ -1,4 +1,4 @@
-##     Multiplestackment 
+##     Multiple Alignment 
 
 from utility import readFastaFileList
 

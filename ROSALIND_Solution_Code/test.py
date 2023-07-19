@@ -1,5 +1,14 @@
-from collections import Counter
-dictA = Counter({1:3,2:5})
-dictB = Counter({1:2,2:5})
+from EDIT import edit
 
-print(dictA[2],(dictA-dictB)[2])
+with open("test.txt",'r') as f:
+    k = int(f.readline().strip())
+    motif = f.readline().strip()
+    genome = f.readline().strip()
+
+with open("result.txt",'r') as f:
+    pair = [i.strip().split() for i in f.readlines()]
+
+
+for i,j in pair:
+    with open("result_1.txt",'a') as f:
+        f.write(f"{i}--{j}---->{str(edit(motif,genome[int(i)-1:int(i)-1+int(j)]))}\n")

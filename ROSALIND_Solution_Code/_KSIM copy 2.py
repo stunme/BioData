@@ -11,27 +11,31 @@ def ksim(seqI, seqJ, k):
     aligns = []
 
     cur = [j for j in range(lenJ)]
-    curPos = [j for j in range(lenJ)]
+    curPos = [{j} for j in range(lenJ)]
     for i in range(1,lenI):
         pre = cur
         prePos = curPos
         cur = [0]+[k]*(lenJ-1)
-        curPos = [i]+[0]*(lenJ-1)
+        curPos = [{i}]
         for j in range(1,lenJ):
             if seqI[i-1]==seqJ[j-1]:
-                cur[j] = pre[j-1]
-                curPos[j] = prePos[j-1]
+                a = pre[j-1]
             else:
-                tmp = {pre[j-1]:prePos[j-1],pre[j]:prePos[j],cur[j-1]:curPos[j-1]}
-                cur[j] = min(tmp)
-                if cur[j]<k:
-                    curPos[j] = tmp[cur[j]]
-                    cur[j] +=1
-        # with open("result_1.txt",'a') as f:
-        #     f.write("\t".join(str(m) for m in cur))
-        #     f.write("\n")
+                a = pre[j-1] +1
+            b = pre[j]+1
+            c = cur[j-1]+1
+            cur[j] = min(a,b,c)
+            curPos.append(set())
+            if cur[j]<k:
+                if cur[j] == a:
+                    curPos[j] |= prePos[j-1]
+                if cur[j] == b:
+                    curPos[j] |= prePos[j]
+                if cur[j] == c:
+                    curPos[j] |= curPos[j-1]
         if cur[j]<k:
-            aligns.append([curPos[j]+1,i-curPos[j]])
+            for m in curPos[j]:
+                aligns.append([m+1,i-m])
     print(time.time()-start)
 
     return aligns

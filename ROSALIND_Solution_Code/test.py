@@ -14,11 +14,7 @@
 #         f.write(f"{i}--{j}---->{str(edit(motif,genome[int(i)-1:int(i)-1+int(j)]))}\n")
 
 
-import time
+a = None
 
-myList = [i for i in range(1000000)]
-
-start = time.time()
-for i in myList:
-    a = {i}
-print(time.time()-start)
+if a:
+    print(a)

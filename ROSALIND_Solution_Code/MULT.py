@@ -1,4 +1,6 @@
-##     Multiplestackment 
+##     Multiple Alignment 
+
+# recursion depth limit is 1000
 
 from utility import readFastaFileList
 
@@ -9,6 +11,7 @@ def mult(seqList):
            Will need global var traceDic, m and copySL"""
         if (i,j) not in traceDic:
             traceDic[(i,j)] = []
+            print(i,j)
             if i*j == 0:
                 y = copySL.copy()
                 y[m]='-'*i+copySL[m][:j]

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from utility import readFastaFileList
 
 def edit(seqI,seqJ):
@@ -35,3 +36,19 @@ print(edit(motif,genome[i+1:i-1+j]))
 print(edit(motif,genome[i-2:i-1+j]))
 
 
+=======
+from EDIT import edit
+
+with open("test.txt",'r') as f:
+    k = int(f.readline().strip())
+    motif = f.readline().strip()
+    genome = f.readline().strip()
+
+with open("result.txt",'r') as f:
+    pair = [i.strip().split() for i in f.readlines()]
+
+
+for i,j in pair:
+    with open("result_1.txt",'a') as f:
+        f.write(f"{i}--{j}---->{str(edit(motif,genome[int(i)-1:int(i)-1+int(j)]))}\n")
+>>>>>>> 73cca28b9ecfda2b346e660a8eed636b9857b0cd

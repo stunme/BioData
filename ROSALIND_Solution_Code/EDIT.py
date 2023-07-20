@@ -23,4 +23,4 @@ def edit(seqI,seqJ):
 
 
 seq = readFastaFileList("test.txt")
-# print(edit(seq[0],seq[1]))
+print(edit(seq[0],seq[1]))

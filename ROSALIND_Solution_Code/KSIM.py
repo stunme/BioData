@@ -1,6 +1,7 @@
 ##  Finding a Motif with Modifications
 
 from utility import readFastaFileList
+from functools import reduce
 
 def ksim(seqI, seqJ, k):
     k += 1
@@ -8,33 +9,36 @@ def ksim(seqI, seqJ, k):
     aligns = set()
     cur = [j for j in range(lenJ)]
     curPos = [{j} for j in range(lenJ)]
-    for i in range(1,lenI):
+    for i in range(0,lenI-1):
         pre = cur.copy()
         prePos = curPos
         curPos = [{i}]
         for j in range(1,lenJ):
-            if seqI[i-1]==seqJ[j-1]:
-                cur[j] = pre[j-1]
-                curPos.append(prePos[j-1].copy())
-            else:
-                a = pre[j-1] +1
-                b = pre[j]+1
-                c = cur[j-1]+1
+            j_ = j - 1
+            if seqI[i]==seqJ[j_]:
+                cur[j] = pre[j_]
+                curPos.append(prePos[j_].copy())
+            else:                        
+                a = pre[j_]
+                b = pre[j]
+                c = cur[j_]
                 cur[j] = min(a,b,c)
                 curPos.append(set())
                 if cur[j]<k:
                     if cur[j] == a:
-                        curPos[j] |= prePos[j-1]
+                        curPos[j] |= prePos[j_]
                     if cur[j] == b:
                         curPos[j] |= prePos[j]
                     if cur[j] == c:
-                        curPos[j] |= curPos[j-1]
-        # if cur[j]<k:
-        for m in curPos[j]:
-            aligns.add((m+1,i-m))
-            for n in range(1,k-cur[j]):
-                aligns.add((m+1+n,i-m-n))
-                aligns.add((max(1,m+1-n),i-m+n))
+                        curPos[j] |= curPos[j_]
+                cur[j] += 1
+                
+        if cur[j]<k:
+            for m in curPos[j]:
+                aligns.add((m+1,i-m))
+                for n in range(1,k-cur[j]):
+                    aligns.add((m+1+n,i-m-n))
+                    aligns.add((max(1,m+1-n),i-m+n))
     return aligns
 
 import time

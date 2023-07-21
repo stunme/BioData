@@ -17,18 +17,19 @@ def smgb(seqI, seqJ):
         pre = cur
         cur = [0]*lenJ
         for j in range(1,lenJ):
-            if seqI[i-1]==seqJ[j-1]:
-                cur[j] = pre[j-1]+1
+            j_ = j-1
+            if seqI[i-1]==seqJ[j_]:
+                cur[j] = pre[j_]+1
                 tracker[i][j] = 0
             else:
-                cur[j] = max(pre[j-1],
+                cur[j] = max(pre[j_],
                                  pre[j],
-                                 cur[j-1])
-                if cur[j] == pre[j-1]:
+                                 cur[j_])
+                if cur[j] == pre[j_]:
                     tracker[i][j] = 0
                 elif cur[j] == pre[j]:
                     tracker[i][j] = 1
-                elif cur[j] == cur[j-1]:
+                elif cur[j] == cur[j_]:
                     tracker[i][j] = 2
                 cur[j]-=1
         if cur[j]>=maxI:
@@ -41,7 +42,6 @@ def smgb(seqI, seqJ):
         if cur[j]>maxJ:
            maxJ = cur[j]
            posj = j 
-
     if maxJ>maxI:
         maxIJ = maxJ
         i = lenI-1
@@ -50,7 +50,6 @@ def smgb(seqI, seqJ):
         maxIJ = maxI
         i = posi
         j = lenJ-1
-        
     
     alignI = seqI[i:]+'-'*(lenJ-j-1)
     alignJ = seqJ[j:]+'-'*(lenI-i-1)

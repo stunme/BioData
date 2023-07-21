@@ -23,8 +23,8 @@ def smgb(seqI, seqJ):
                 tracker[i][j] = 0
             else:
                 cur[j] = max(pre[j_],
-                                 pre[j],
-                                 cur[j_])
+                             pre[j],
+                             cur[j_])
                 if cur[j] == pre[j_]:
                     tracker[i][j] = 0
                 elif cur[j] == pre[j]:
@@ -33,15 +33,12 @@ def smgb(seqI, seqJ):
                     tracker[i][j] = 2
                 cur[j]-=1
         if cur[j]>=maxI:
-            maxI = cur[j]
             posi = i
+            maxI = cur[j]
 
-    maxJ = maxI
-    while j > 0:
-        j -= 1
-        if cur[j]>maxJ:
-           maxJ = cur[j]
-           posj = j 
+    posj = max(range(lenJ),key=lambda x:cur[x])
+    maxJ = cur[j]
+
     if maxJ>maxI:
         maxIJ = maxJ
         i = lenI-1
@@ -76,6 +73,9 @@ def smgb(seqI, seqJ):
     return [alignI,alignJ]
 
 
+import time
+start = time.time()
 seqList = readFastaFileList("test.txt")
 with open("result.txt",'a') as f:
     f.write("\n".join(i for i in smgb(seqList[0],seqList[1])))
+print(time.time()-start)

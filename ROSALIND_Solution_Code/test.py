@@ -1,10 +1,3 @@
-import time
-k = 10
-cur = [j for j in range(10000)]
-start = time.time()
-for i in range(1000):
-    pre = cur
-    cur = [0]*10000
-    # pre = cur.copy()
-    
-print(time.time()-start)
+a = [1,5,67,89,3,0,4]
+
+print(max(range(len(a)),key=lambda x:a[x]))

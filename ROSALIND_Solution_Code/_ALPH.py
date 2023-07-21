@@ -27,10 +27,8 @@ class node():
     def __init__(self, taxa) -> None:
         self.taxa = taxa
         self.child = None
-        self.parent = None
 
 tokens =re.split("([(),])",treeStr)
-print(tokens)
 stack = [[]]
 cur = None
 for i in range(len(tokens)):
@@ -38,19 +36,20 @@ for i in range(len(tokens)):
         stack.append([])
     elif tokens[i] == ')':
         cur = stack.pop()
+        print(t.taxa for t in cur)
     elif tokens[i].isalpha():
-        stack[-1].append(node(tokens[i]))
+        root = node(tokens[i])
+        stack[-1].append(root)
         if not cur:
-            root = stack[-1][-1]
             root.child = cur
             print(root.taxa)
             cur = None
 
-def traceDown(nd):
-    if nd.child:
-        print(nd.taxa)
-    else:
-        traceDown(nd.child[0])
-        traceDown(nd.child[1])
+# def traceDown(nd):
+#     if nd.child:
+#         print(nd.taxa)
+#     else:
+#         traceDown(nd.child[0])
+#         traceDown(nd.child[1])
         
-traceDown(root)
+# traceDown(root)

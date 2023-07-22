@@ -22,9 +22,10 @@ def ksim(seqT, seqS, k):
             cache.append(lenT-i-2)
 
     result = []
+    pre_super = [j for j in range(lenS)]
     for c in cache[::-1]:
-        pre = [j for j in range(lenS)]
-        cur = [k for j in range(lenS)]
+        pre = pre_super.copy()
+        cur = [k]*lenS
         subSeqT = seqT[c:]
         for i in range(0,min(len(subSeqT),lenS+k-1)):
             cur[0] = pre[0]+1
@@ -43,13 +44,11 @@ with open("test.txt",'r') as f:
     k = int(f.readline().strip())
     motif = f.readline().strip()
     genome = f.readline().strip()
-    
+
 with open("result.txt",'w') as f:
     for i in ksim(genome,motif,k):
         f.write(' '.join(str(j) for j in i))
         f.write('\n')
-
-
 
 ###################################################################################
 # one direction search, save all starting location

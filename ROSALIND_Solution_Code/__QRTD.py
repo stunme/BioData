@@ -42,6 +42,7 @@ def hdTree(urTreeSet):
             self.content = None
             self.type = 0
             self.colorCode = (0,0,0)
+
         def F3(self,x,y,z):
             sum = 0
             a1,b1,c1 = x
@@ -73,9 +74,9 @@ def hdTree(urTreeSet):
         def F1(self,x):
             sum = 0
             a1,b1,c1 = self.edgeColor[0]
-            sum += int(a1*(a1-1)/2)*(b1*c1+b1*c1)
-            sum += int(b1*(b1-1)/2)*(a1*c1+a1*c1)
-            sum += int(c1*(c1-1)/2)*(b1*a1+b1*a1)
+            sum += int(a1*(a1-1)/2)*b1*c1
+            sum += int(b1*(b1-1)/2)*a1*c1
+            sum += int(c1*(c1-1)/2)*b1*a1
             return sum
 
         def F(self):

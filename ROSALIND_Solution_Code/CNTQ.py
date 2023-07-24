@@ -63,12 +63,9 @@ def count(node, n):
     node1 = node.child[0]
     node2 = node.child[1]
     sum = 0
-    if node1.count > 1:
-        sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count*n) % 10**6
-    if node2.count > 1:
-        sum += (node2.count * (node2.count-1) / 2) %10**6 * (node1.count*n) % 10**6
-    if node1.count>1 and node2.count>1:
-        sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count * (node2.count-1) / 2) % 10**6
+    sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count*n) % 10**6
+    sum += (node2.count * (node2.count-1) / 2) %10**6 * (node1.count*n) % 10**6
+    sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count * (node2.count-1) / 2) % 10**6
     sum += count(node1,n+node2.count)
     sum += count(node2,n+node1.count)
     return sum % 10**6
@@ -88,23 +85,17 @@ for i in root.child:
     subCount.append(i.count)
     total += count(i,n-i.count)
 
-if subCount[0]>1:
-    total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[1]*subCount[2]) % 10**6
-    total %= 10**6
-if subCount[1]>1:
-    total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0]*subCount[2]) % 10**6
-    total %= 10**6
-if subCount[2]>1:
-    total += (subCount[2] * (subCount[2]-1) /2)% 10**6 * (subCount[1]*subCount[0]) % 10**6
-    total %= 10**6
-if subCount[1]>1 and subCount[2]>1:
-    total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6 
-    total %= 10**6
-if subCount[1]>1 and subCount[0]>1:
-    total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0] * (subCount[0]-1) /2) % 10**6
-    total %= 10**6
-if subCount[0]>1 and subCount[2]>1:
-    total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6
-    total %= 10**6
+total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[1]*subCount[2]) % 10**6
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0]*subCount[2]) % 10**6
+total %= 10**6
+total += (subCount[2] * (subCount[2]-1) /2)% 10**6 * (subCount[1]*subCount[0]) % 10**6
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6 
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0] * (subCount[0]-1) /2) % 10**6
+total %= 10**6
+total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6
+total %= 10**6
 
 print(int(total))

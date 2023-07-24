@@ -1,10 +1,31 @@
 ##  Longest Increasing Subsequence
 ##  compare patience sorting and DP solution(about 10 times slower)
 
-dataset = []
-with open("test.txt", 'r') as f:
-    f.readline()
-    dataset = [int(j) for j in f.readline().strip().split(' ')]
+"""
+Problem
+A subsequence of a permutation is a collection of elements of the permutation in the order that they appear. For example, (5, 3, 4) is a subsequence of (5, 1, 3, 4, 2).
+
+A subsequence is increasing if the elements of the subsequence increase, and decreasing if the elements decrease. For example, given the permutation (8, 2, 1, 6, 5, 7, 4, 3, 9), an increasing subsequence is (2, 6, 7, 9), and a decreasing subsequence is (8, 6, 5, 4, 3). You may verify that these two subsequences are as long as possible.
+
+Given: A positive integer n≤10000
+ followed by a permutation π
+ of length n
+.
+
+Return: A longest increasing subsequence of π
+, followed by a longest decreasing subsequence of π
+.
+
+Sample Dataset
+5
+5 1 4 2 3
+
+Sample Output
+1 2 3
+5 4 2
+"""
+
+## define function
 
 def findLCS1( dataset, ascend = True):
     """patience sorting"""
@@ -105,18 +126,27 @@ def findLCS2(dataset, ascend = True):
                 result.insert(insert_k,tmp)
     return max(result,key =len)
 
+
+
+dataset = []
+with open("../datasets/LGIS_dataset.txt", 'r') as f:
+    f.readline()
+    dataset = [int(j) for j in f.readline().strip().split(' ')]
+
+
+
 import time
 
 ascend = False
 start = time.time()
 LCS = findLCS2(dataset,ascend)
 print(len(LCS))
-print(time.time()-start)
+print(f"DP solution      -> {time.time()-start}")
 
 start = time.time()
 LCS = findLCS1(dataset, lambda a,b: a > b)
 print(len(LCS))
-print(time.time()-start)
+print(f"patience sorting -> {time.time()-start}")
 
 
 

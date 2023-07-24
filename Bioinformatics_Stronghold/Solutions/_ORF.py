@@ -1,5 +1,0 @@
-##  Open Reading Frames
-from DNASeq import DNASeq
-
-seq = DNASeq("AGCCATGTAGCTAACTCAGGTTACATGGGGATGACCCCGCGACTTGGATTAGAGTCTCTTTTGGAATAAGCCTGAATGATCCGAGTAGCATCTCAG")
-print("\n".join(s for s in seq.findAllProteins()))

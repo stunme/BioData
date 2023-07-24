@@ -1,6 +1,7 @@
 ##  Quartet Distance
 
-#Gerth et al. 2004 Algorithmica
+#Gerth et al. 2004 Algorithmica. DOI: 10.1007/s00453-003-1065-y
+#Unfinished code. Stopped at F fuction definition. 
 
 import re
 import time
@@ -9,6 +10,7 @@ def unrootTree(treeSeq):
         def __init__(self,childs) -> None:
             self.child = childs
             self.isInnerNode = (len(childs)>1)
+            self.taxa = ""
             self.color = (0,0,0)
 
     tokens = re.split("([(,)])",treeSeq)
@@ -21,6 +23,7 @@ def unrootTree(treeSeq):
             stack[-1].append(node(cur))
         elif t not in ' ,':
             taxaPointer[t].append(node([t]))
+            taxaPointer[t][-1].taxa = t
             stack[-1].append(taxaPointer[t][-1])
     root = node(cur)
     nodes = {root}
@@ -63,17 +66,17 @@ def hdTree(urTreeSet):
             sum = 0
             a1,b1,c1 = x
             a2,b2,c2 = y
-            sum += int(a1*(a1-1)/2)*(b2*c3+b3*c2)
-            sum += int(a2*(a2-1)/2)*(b1*c3+b3*c1)
-            sum += int(b1*(b1-1)/2)*(a2*c3+a3*c2)
-            sum += int(b2*(b2-1)/2)*(a1*c3+a3*c1)
-            sum += int(c1*(c1-1)/2)*(b2*a3+b3*a2)
-            sum += int(c2*(c2-1)/2)*(b1*a3+b3*a1)
+            sum += int(a1*(a1-1)/2)*(b2*c1+b1*c2)
+            sum += int(a2*(a2-1)/2)*(b2*c1+b1*c2)
+            sum += int(b1*(b1-1)/2)*(a2*c1+a1*c2)
+            sum += int(b2*(b2-1)/2)*(a2*c1+a1*c2)
+            sum += int(c1*(c1-1)/2)*(b2*a1+b1*a2)
+            sum += int(c2*(c2-1)/2)*(b2*a1+b1*a2)
             return sum
         
         def F1(self,x):
             sum = 0
-            a1,b1,c1 = self.edgeColor[0]
+            a1,b1,c1 = x
             sum += int(a1*(a1-1)/2)*b1*c1
             sum += int(b1*(b1-1)/2)*a1*c1
             sum += int(c1*(c1-1)/2)*b1*a1
@@ -82,18 +85,22 @@ def hdTree(urTreeSet):
         def F(self):
             sum = 0
             if self.type == 0:
-                if len(self.edge()) == 3:
-                    sum += self.F3(self.edge[0],self.edge[1],self.edge[2])
+                if len(self.edgeColor) == 3:
+                    sum += self.F3(self.edgeColor[0],self.edgeColor[1],self.edgeColor[2])
             elif self.type == 1:
-                if len(self.child[0].edge) == 3:
-                    sum += F3()
+                sum += self.F3(self.child[0].colorCode,edgeColor[self.edge[0]],edgeColor[self.edge[1]])
+                sum += self.F1((
+                                edgeColor[self.edge[0]][0]+edgeColor[self.edge[1]][0]+self.child[1].colorCode[0],
+                                edgeColor[self.edge[0]][1]+edgeColor[self.edge[1]][1]+self.child[1].colorCode[1],
+                                edgeColor[self.edge[0]][2]+edgeColor[self.edge[1]][2]+self.child[1].colorCode[2],
+                ))
             elif self.type == 2:
-                pass
+                sum += self.F2(,)
             elif self.type == 3:
                 pass
             elif self.type == 4:
                 for c in self.child:
-                    sum += c.F()
+                    sum += self.F1(c.colorCode)
             return sum
     nodeDict = {}
     edgeDict = {}
@@ -203,9 +210,6 @@ def rootTree(urTreeSet):
     root.size = removeOrient(root)
     print(f"root.size = {root.size}")
     return root
- 
-def small(node):
-    pass
 
 with open("test.txt",'r') as f:
     taxaList = f.readline().strip().split()
@@ -222,23 +226,69 @@ urTreeSet2 = unrootTree(treeSeq2)
 rootT1 = rootTree(urTreeSet1)
 rootHDT2 = hdTree(urTreeSet2)
 
+
+
+def colorLeaves(node,color):
+    if len(node.child)>0:
+        for c in node.child:
+            if isinstance(c,str):
+                colorLeaf(c,color)
+            else:
+                colorLeaves(c,color)
+
+def count(nd):
+    if nd.isInnerNode:
+        colorLeaves(nd.child[0],(0,1,0))
+        x = nodeCount(nd)
+        colorLeaves(nd.child[0],(0,0,1))
+        y = count(nd.child[1])
+        colorLeaves(nd.child[0],(1,0,0))
+        z = count(nd.child[0])
+        return x+y+z
+
+    else:
+        colorLeaf(nd.taxa,(0,0,1))
+        return 0
+
+
+
+
+
+
+
+
+
+
+
+import random
+ABC = [(1,0,0),(0,1,0),(0,0,1)]
+def randomColor(node):
+    if len(node.child)>0:
+        for c in node.child:
+            if isinstance(c,str):
+                colorLeaf(c,random.choice(ABC))
+            else:
+                randomColor(c)
+
+randomColor(rootT1)
+
 print(f"rootHDT2.colorCode = {rootHDT2.colorCode}")
 print(f"rootHDT2.child[0].colorCode = {rootHDT2.child[0].colorCode}")
 print(f"rootHDT2.child[1].colorCode = {rootHDT2.child[1].colorCode}")
 print(f"rootHDT2.F = {rootHDT2.F()}")
 
-sumTwo = []
-def checker(node):
-    sumTwo.append(len(node.edge))
+
+sumQuantet = []
+def checker2(node):
+    sumQuantet.append(node.F())
     if len(node.child)>0:
         for c in node.child:
-            checker(c)
+            checker2(c)
 
-checker(rootHDT2)
-print(sum(i==3 for i in sumTwo))
-print(sum(i==2 for i in sumTwo))
-print(sum(i==1 for i in sumTwo))
-print(sum(i==0 for i in sumTwo))
+checker2(rootHDT2)
+print(f"sumAllQuantet --> {sum(i for i in sumQuantet)}")
+print(f"totalQuantet  --> {int(1963*1962*1961*1960/4/3/2)}")
+print(f"F=0 --> {sum(i==0 for i in sumQuantet)}")
 
 # for i in urTreeSet1:
 #     print(len(i.child),i.isInnerNode)

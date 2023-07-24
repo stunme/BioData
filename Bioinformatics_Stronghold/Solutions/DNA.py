@@ -12,10 +12,15 @@ Given: A DNA string s of length at most 1000 nt.
 Return: Four integers (separated by spaces) counting the respective number of times that the symbols 'A', 'C', 'G', and 'T' occur in s
 .
 
+Sample Dataset
+AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC
+
+Sample Output
+20 12 17 21
+
 """
 
-## function define
-
+## define function 
 def countDNA(seq):
     dic = {"A": 0,
            "C": 0,
@@ -27,7 +32,7 @@ def countDNA(seq):
     return dic
 
 ##  input dataset
-with open("../Dataset/DNA_dataset.txt",'r') as f:
+with open("../datasets/DNA_dataset.txt",'r') as f:
     seq = f.readline().strip()
 
 ##  print output

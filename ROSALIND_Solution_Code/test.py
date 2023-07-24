@@ -1,3 +1,6 @@
-a = [1,5,67,89,3,0,4]
+import sys
 
-print(max(range(len(a)),key=lambda x:a[x]))
+a = 1
+b = b'1'
+print(sys.getsizeof(a))
+print(sys.getsizeof(b))

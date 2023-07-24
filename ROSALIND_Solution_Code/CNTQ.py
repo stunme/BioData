@@ -9,7 +9,8 @@ print(int(fa(n)/fa(n-4)/fa(4)%10**6))
 
 
 
-# Another solution by recursion calculate every branch. 
+# Another solution by recursion calculate every branch.
+# Practice for count quartet distance 
 
 
 

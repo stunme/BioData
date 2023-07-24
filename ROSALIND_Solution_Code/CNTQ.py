@@ -1,17 +1,18 @@
 ##  Counting Quartets
 
 # another pure math question. Pick any four taxas from the collection will guarantee to have one quartet.
+from math import factorial as fa
 
 with open("test.txt",'r') as f:
     n = int(f.readline().strip())
-print(fa(n)/fa(n-4)/fa(4)%10**6)
+print(int(fa(n)/fa(n-4)/fa(4)%10**6))
 
 
 
-# Another solution by recursion calculate every branch. 
+# Another solution by recursion calculate every branch.
+# Practice for count quartet distance 
 
 
-from math import factorial as fa
 
 #mimic a unrooted binary tree, with root has three child as starting point
 
@@ -62,12 +63,9 @@ def count(node, n):
     node1 = node.child[0]
     node2 = node.child[1]
     sum = 0
-    if node1.count > 1:
-        sum += (fa(node1.count) / fa(node1.count-2) / 2) %10**6 * (node2.count*n) % 10**6
-    if node2.count > 1:
-        sum += (fa(node2.count) / fa(node2.count-2) / 2) %10**6 * (node1.count*n) % 10**6
-    if node1.count>1 and node2.count>1:
-        sum += (fa(node1.count) / fa(node1.count-2) / 2) %10**6 * (fa(node2.count) / fa(node2.count-2) / 2) % 10**6
+    sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count*n) % 10**6
+    sum += (node2.count * (node2.count-1) / 2) %10**6 * (node1.count*n) % 10**6
+    sum += (node1.count * (node1.count-1) / 2) %10**6 * (node2.count * (node2.count-1) / 2) % 10**6
     sum += count(node1,n+node2.count)
     sum += count(node2,n+node1.count)
     return sum % 10**6
@@ -87,23 +85,17 @@ for i in root.child:
     subCount.append(i.count)
     total += count(i,n-i.count)
 
-if subCount[0]>1:
-    total += (fa(subCount[0])/fa(subCount[0]-2)/2)% 10**6 * (subCount[1]*subCount[2]) % 10**6
-    total %= 10**6
-if subCount[1]>1:
-    total += (fa(subCount[1])/fa(subCount[1]-2)/2)% 10**6 * (subCount[0]*subCount[2]) % 10**6
-    total %= 10**6
-if subCount[2]>1:
-    total += (fa(subCount[2])/fa(subCount[2]-2)/2)% 10**6 * (subCount[1]*subCount[0]) % 10**6
-    total %= 10**6
-if subCount[1]>1 and subCount[2]>1:
-    total += (fa(subCount[1])/fa(subCount[1]-2)/2)% 10**6 * (fa(subCount[2])/fa(subCount[2]-2)/2) % 10**6 
-    total %= 10**6
-if subCount[1]>1 and subCount[0]>1:
-    total += (fa(subCount[1])/fa(subCount[1]-2)/2)% 10**6 * (fa(subCount[0])/fa(subCount[0]-2)/2) % 10**6
-    total %= 10**6
-if subCount[0]>1 and subCount[2]>1:
-    total += (fa(subCount[0])/fa(subCount[0]-2)/2)% 10**6 * (fa(subCount[2])/fa(subCount[2]-2)/2) % 10**6
-    total %= 10**6
+total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[1]*subCount[2]) % 10**6
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0]*subCount[2]) % 10**6
+total %= 10**6
+total += (subCount[2] * (subCount[2]-1) /2)% 10**6 * (subCount[1]*subCount[0]) % 10**6
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6 
+total %= 10**6
+total += (subCount[1] * (subCount[1]-1) /2)% 10**6 * (subCount[0] * (subCount[0]-1) /2) % 10**6
+total %= 10**6
+total += (subCount[0] * (subCount[0]-1) /2)% 10**6 * (subCount[2] * (subCount[2]-1) /2) % 10**6
+total %= 10**6
 
 print(int(total))

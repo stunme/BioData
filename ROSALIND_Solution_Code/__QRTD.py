@@ -85,8 +85,8 @@ def hdTree(urTreeSet):
                 if len(self.edge()) == 3:
                     sum += self.F3(self.edge[0],self.edge[1],self.edge[2])
             elif self.type == 1:
-                if len(self.edge()) == 2:
-                    pass
+                if len(self.child[0].edge) == 3:
+                    sum += F3()
             elif self.type == 2:
                 pass
             elif self.type == 3:
@@ -145,12 +145,11 @@ def hdTree(urTreeSet):
                     continue
                 if len(nodeDict[ndPair]) + len(nodeDict[nd]) < 5:
                     tmp = component()
-                    tmp.child = [nd,ndPair]
+                    tmp.child = sorted([nd,ndPair],key=lambda a: len(a.edge))
                     tmp.colorCode = tuple(x+y for x,y in zip(nd.colorCode,ndPair.colorCode))
 
                     newEdges = [x for x in nodeDict[nd] if x!=(ea,eb)]
                     newEdges += [x for x in nodeDict[ndPair] if x!=(eb,ea)]
-
                     if len(nd.edge) == 3 or len(ndPair.edge) == 3:
                         tmp.type = 1
                     else:

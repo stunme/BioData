@@ -83,10 +83,13 @@ def hdTree(urTreeSet):
             sum = 0
             if self.type == 0:
                 if len(self.edge()) == 3:
-                    sum += self.F3(self.edge[0],self.edge[1],self.edge[2])
+                    sum += self.F3(self.edgeColor[0],self.edgeColor[1],self.edgeColor[2])
             elif self.type == 1:
-                if len(self.child[0].edge) == 3:
-                    sum += F3()
+                sum += self.F3(self.child[0].colorCode,self.edgeColor[0],self.edgeColor[1])
+                sum += self.F1( self.child[1].colorCode[0]+self.edgeColor[0][0]+self.edgeColor[1][0],
+                                self.child[1].colorCode[1]+self.edgeColor[0][1]+self.edgeColor[1][1],
+                                self.child[1].colorCode[2]+self.edgeColor[0][2]+self.edgeColor[1][2],
+                                )
             elif self.type == 2:
                 pass
             elif self.type == 3:

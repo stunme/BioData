@@ -85,7 +85,6 @@ def hdTree(urTreeSet):
         def F(self):
             sum = 0
             if self.type == 0:
-<<<<<<< HEAD:ROSALIND_Solution_Code/__QRTD.py
                 if len(self.edge()) == 3:
                     sum += self.F3(self.edgeColor[0],self.edgeColor[1],self.edgeColor[2])
             elif self.type == 1:
@@ -94,17 +93,6 @@ def hdTree(urTreeSet):
                                 self.child[1].colorCode[1]+self.edgeColor[0][1]+self.edgeColor[1][1],
                                 self.child[1].colorCode[2]+self.edgeColor[0][2]+self.edgeColor[1][2],
                                 )
-=======
-                if len(self.edgeColor) == 3:
-                    sum += self.F3(self.edgeColor[0],self.edgeColor[1],self.edgeColor[2])
-            elif self.type == 1:
-                sum += self.F3(self.child[0].colorCode,edgeColor[self.edge[0]],edgeColor[self.edge[1]])
-                sum += self.F1((
-                                edgeColor[self.edge[0]][0]+edgeColor[self.edge[1]][0]+self.child[1].colorCode[0],
-                                edgeColor[self.edge[0]][1]+edgeColor[self.edge[1]][1]+self.child[1].colorCode[1],
-                                edgeColor[self.edge[0]][2]+edgeColor[self.edge[1]][2]+self.child[1].colorCode[2],
-                ))
->>>>>>> 0894939cfafc97568e35091943ccb7b32f24695d:Bioinformatics_Stronghold/Solutions/tmp/__QRTD.py
             elif self.type == 2:
                 sum += self.F2(,)
             elif self.type == 3:
@@ -222,7 +210,7 @@ def rootTree(urTreeSet):
     print(f"root.size = {root.size}")
     return root
 
-with open("test.txt",'r') as f:
+with open("../datasets/QRTD_dataset.txt",'r') as f:
     taxaList = f.readline().strip().split()
     treeSeq1 = f.readline().strip().replace(';','')
     treeSeq2 = f.readline().strip().replace(';','')

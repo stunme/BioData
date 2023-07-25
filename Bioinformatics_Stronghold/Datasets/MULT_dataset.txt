@@ -1,0 +1,8 @@
+>Rosalind_6518
+TGATTTACT
+>Rosalind_4502
+ACCGGTGCCG
+>Rosalind_2101
+TCCTGTTAA
+>Rosalind_5223
+CGGTGACC

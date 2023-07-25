@@ -1,4 +1,4 @@
-##  Bioinformatics_Stronghold/Solutions/tmp/RNAS.py
+##  Finding Disjoint Motifs in a Gene
 
 """
 Problem
@@ -49,7 +49,8 @@ Sample Output
 1 0 0
 """
 
-##  define function, credit belong to Aleksandar Dimitriev, on Rosalind
+##  define function for search t1 and t2 as disjoint motif in s(start from s[0]) 
+#   credit belong to Aleksandar Dimitriev, on Rosalind
 def itwv(s, t1, t2):
     if len(t1) + len(t2) == 0:
         return True
@@ -60,6 +61,13 @@ def itwv(s, t1, t2):
     else:
         return t1[0] == s[0] and itwv(s[1:], t1[1:], t2) or t2[0] == s[0] and itwv(s[1:], t1, t2[1:])
 
+#search all substrings of s
+def itwv_s(s,t1,t2):
+    for i in range(len(s)-len(t1)-len(t2)+1):
+        if itwv(s[i:],t1,t2):
+            return 1
+    return 0
+
 ##  import data
 with open("../datasets/ITWV_dataset.txt","r") as f:
     s = f.readline().strip()
@@ -67,4 +75,4 @@ with open("../datasets/ITWV_dataset.txt","r") as f:
 
 ##  print result
 for i in seqList:
-    print(" ".join(str(int(itwv(s,i,j))) for j in seqList))
+    print(" ".join(str(itwv_s(s,i,j)) for j in seqList))

@@ -49,12 +49,22 @@ Sample Output
 1 0 0
 """
 
-def itwv(s,t1,t2):
+##  define function, credit belong to Aleksandar Dimitriev, on Rosalind
+def itwv(s, t1, t2):
+    if len(t1) + len(t2) == 0:
+        return True
+    elif len(t1) == 0:
+        return t2[0] == s[0] and itwv(s[1:], t1, t2[1:])
+    elif len(t2) == 0:
+        return t1[0] == s[0] and itwv(s[1:], t1[1:], t2)
+    else:
+        return t1[0] == s[0] and itwv(s[1:], t1[1:], t2) or t2[0] == s[0] and itwv(s[1:], t1, t2[1:])
 
-
-
-
+##  import data
 with open("../datasets/ITWV_dataset.txt","r") as f:
     s = f.readline().strip()
     seqList = [i.strip() for i in f.readlines()]
 
+##  print result
+for i in seqList:
+    print(" ".join(str(int(itwv(s,i,j))) for j in seqList))
